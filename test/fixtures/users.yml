@@ -5,10 +5,11 @@ michael:
   email: michael@example.com
   password_digest: <%= User.digest('password') %>
 
-one:
-  name: MyString
-  email: MyString
+# これコメントアウトしないとメールアドレス一意性の制約に反することになりエラー
+# one:
+#   name: MyString
+#   email: MyString
 
-two:
-  name: MyString
-  email: MyString
+# two:
+#   name: MyString
+#   email: MyString
