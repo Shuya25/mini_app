@@ -4,16 +4,15 @@
 <%= will_paginate %>
 
 <ul class="users">
-  <% @users.each do |user| %>
-    <li>
-      <%= gravatar_for user, size: 50 %>
-      <%= link_to user.name, user_path(user) %>
-      <% if current_user.admin? && !current_user?(user) %>
-        | <%= link_to "delete", user, method: :delete,
-                                      data: { confirm: "You sure?" } %>
-      <% end %>
-    </li>
-  <% end %>
+  <!-- <% @users.each do |user| %>
+    <%= render user %>
+  <% end %> -->
+  
+  <!-- Railsは@users をUserオブジェクトのリストであると推測します。
+    さらに、ユーザーのコレクションを与えて呼び出すと、
+    Railsは自動的にユーザーのコレクションを列挙し、
+    それぞれのユーザーを_user.html.erbパーシャルで出力します。-->>
+  <%= render @users %>
 </ul>
 
 <%= will_paginate %>

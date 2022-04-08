@@ -1,5 +1,13 @@
 class User < ApplicationRecord
   has_many :microposts, dependent: :destroy
+  has_many :active_relationships, class_name: "Relationship",
+                                  foreign_key: "follower_id",
+                                  dependent: :destroy
+  has_many :passive_relationships, class_name: "Relationship",
+                                  foreign_key: "followed_id",
+                                  dependent: :destroy
+  has_many :following, through: :active_relationships, source: :followed
+  has_many :followers, through: :passive_relationships, source: :follower
   attr_accessor :remember_token, :activation_token, :reset_token
   before_save   :downcase_email
   before_create :create_activation_digest
@@ -82,12 +90,33 @@ class User < ApplicationRecord
     reset_sent_at < 2.hours.ago
   end
 
-  # 試作feedの定義
-  # 完全な実装は次章の「ユーザーをフォローする」を参照
+  # return user's status feed
   def feed
-    Micropost.where("user_id = ?", id)
+    # self.following_ids <- self.following.map(&:id) <- self.following.map { |f| f.id }
+    #1 Micropost.where("user_id IN (?) OR user_id = ?", self.following_ids, self.id)
+    #2 Micropost.where("user_id IN (:following_ids) OR user_id = :user_id",
+    # following_ids: self.following_ids, user_id: self.id)
+    following_ids = "SELECT followed_id FROM relationships
+                     WHERE follower_id = :user_id"
+    Micropost.where("user_id IN (#{following_ids})
+                     OR user_id = :user_id", user_id: id)
   end
   
+  # follow users
+  def follow(other_user)
+    self.following << other_user
+  end
+
+  # unfollow users
+  def unfollow(other_user)
+    self.active_relationships.find_by(followed_id: other_user.id).destroy
+  end
+
+  # return true if current user follows the user
+  def following?(other_user)
+    self.following.include?(other_user)
+  end
+
   private
 
     # メールアドレスをすべて小文字にする
