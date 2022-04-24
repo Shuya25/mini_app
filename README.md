@@ -1,5 +1,7 @@
 # README
 # mini app
+I'm currently working hard!
+現在、鋭意製作中。
 
 ## 使い方
 
