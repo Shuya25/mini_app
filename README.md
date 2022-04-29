@@ -6,12 +6,13 @@ I'm currently working hard!
 ## 使い方
 
 リポジトリを手元にクローン
-その後、次のコマンドで必要になる RubyGems をインストール
+その後、次のコマンドで必要になる RubyGems 等をインストール
 
 ```
 $ gem install bundler -v 2.3.5
 $ bundle _2.3.5_ config set --local without 'production'
 $ bundle _2.3.5_ install
+$ yarn install --check-files
 ```
 
 その後、データベースへのマイグレーションを実行
