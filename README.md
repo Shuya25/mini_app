@@ -13,6 +13,7 @@ $ gem install bundler -v 2.3.5
 $ bundle _2.3.5_ config set --local without 'production'
 $ bundle _2.3.5_ install
 $ yarn install --check-files
+$ rails webpacker:install
 ```
 
 その後、データベースへのマイグレーションを実行
