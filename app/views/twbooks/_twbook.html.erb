@@ -1,0 +1,22 @@
+<li id="twbook-<%= twbook.id %>">
+    <%= link_to gravatar_for(twbook.user, size: 50), twbook.user %>
+    <span class="user"><%= link_to twbook.user.name, twbook.user %></span>
+    <span class="content">
+        <!-- %= image_tag twbook.images if twbook.images.attached? % -->
+        <% if twbook.images.attached? %>
+            <% twbook.images.each do |image| %>
+                <%= image_tag image.variant(resize: '200x200') %>
+            <% end %>
+        <% end %>
+    </span>
+    <span class="content">
+        <%= twbook.content %>
+    </span>
+    <span class="timestamp">
+        <!-- Posted <%= time_ago_in_words(twbook.created_at) %> ago. -->
+        Posted <%= twbook.created_at %> 
+        <% if current_user?(twbook.user) %>
+            <%= link_to "delete", twbook, method: :delete, data: { confirm: "You sure?" } %>
+        <% end %>
+    </span>
+</li>

@@ -116,4 +116,12 @@ class UserTest < ActiveSupport::TestCase
     end
   end
 
+  test "associated twbooks should be destroyed" do
+    @user.save
+    @user.twbooks.create!(content: "Lorem ipsum")
+    assert_difference 'Twbook.count', -1 do
+      @user.destroy
+    end
+  end
+
 end
