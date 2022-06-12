@@ -11,4 +11,9 @@
   <a>
     <%= image_tag("kitten.jpg", alt: "Cat image", width: "200px") %>
   </a>
+
+  <div>
+    <%= @tweet.full_text %>
+    <!--%= image_tag(@tweet.media.media_url, alt: "tweet image") %-->
+  </div>
 </p>

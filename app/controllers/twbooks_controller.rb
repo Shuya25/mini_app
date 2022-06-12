@@ -6,7 +6,7 @@ class TwbooksController < ApplicationController
     # @user = User.find(params[:id])
     @user = current_user
     @twbook = @user.twbooks.build
-    @twbooks = @user.twbooks.paginate(page: params[:page])
+    @twbooks = @user.twbooks.paginate(page: params[:page], per_page: 10)
     # render 'list_twbook' # views/twbooks/の中にindexがあるならばそれを自動で見つけてレンダーするので明記する必要はない。
   end
 
